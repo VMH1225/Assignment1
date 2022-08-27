@@ -1,5 +1,5 @@
 // Name: Victor Huerta
-// Date: 08-27-2022
+// August 27, 2022
 // Project: Chapter 3 -Assignments
 
 #include <iostream>
