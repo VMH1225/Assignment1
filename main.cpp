@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <math.h>
 #include "input.h"
+#include "DescriptiveStatistics.h"
 using namespace std;
 int menuOption();
 int menuOption2();
@@ -25,8 +26,9 @@ int main()
 
         case 1: Challenge1(); break;
             //case 2: Challenge2(); break;
-
+        
         case 3: Challenge3(); break;
+        case 4: C4(); break;
         default: cout << "\t\tERROR - Invalid option. Please re-enter."; break;
         }
         cout << "\n";
@@ -37,7 +39,10 @@ int main()
     return EXIT_SUCCESS;
 }
 
-
+void C4() {
+    DescriptiveStatistics data;
+    data.chooseOption();
+}
 int menuOption()
 {
     system("cls");
@@ -51,7 +56,7 @@ int menuOption()
     cout << "\n\t" + string(100, char(205));
     cout << "\n";
 
-    int option = inputInteger("\t\t  Option: ", 0, 3);
+    int option = inputInteger("\t\t  Option: ", 0, 4);
     system("cls");
     return option;
 }
@@ -189,6 +194,8 @@ int* arrayNumbers(int& size)
 
     return numbers;
 }
+
+
 int minNumber(int* numberArr, int size)
 {
     int min;
