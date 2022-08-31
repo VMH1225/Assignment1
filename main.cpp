@@ -56,7 +56,7 @@ int menuOption()
     cout << "\n\t" + string(100, char(205));
     cout << "\n";
 
-    int option = inputInteger("\t\t  Option: ", 0, 4);
+    int option = inputInteger("\t\t  Optionxzzzzzzz: ", 0, 4);
     system("cls");
     return option;
 }
