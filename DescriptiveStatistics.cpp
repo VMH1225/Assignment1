@@ -1,55 +1,14 @@
+
+#include "DescriptiveStatistics.h"
+#include "input.h"
 #include <iostream>
-#include <DescriptiveStatistics.h>
+#include <string>
+#include <fstream>
+#include <math.h> 
 
-void chooseOption()
-{
-    int* arr = nullptr;
-    int arrSize = 0;
-    do
-    {
-        switch (menu())
-        {
-        case '0': { delete[] arr; arr = nullptr; exit(1); break; }
-        case 'A':
-        case 'a': { 
-            break;
-        }
-        case 'B':
-        case 'b':
-        {   
-            break;
-        }
-        case 'C':
-        case 'c': cout << "hi" << endl; break;
-        case 'D':
-        case 'd': cout << "hi" << endl;break;
-        case 'e':
-        case 'E': cout << "hi" << endl;break;
-        case 'F':
-        case 'f': cout << "hi" << endl;break;
-        case 'G':
-        case 'g': cout << "hi" << endl;break;
-        case 'H':
-        case 'h': cout << "hi" << endl;break;
-        case 'K':
-        case 'k': cout << "hi" << endl;break;
-        case 'L':
-        case 'l': cout << "hi" << endl;break;
-        case 'M':
-        case 'm': cout << "hi" << endl;break;
-        case 'Q':
-        case 'q': cout << "hi" << endl;break;
+using namespace std;
 
-        default: cout << "\t\tERROR - Invalid option. Please re-enter."; break;
-        }
-        cout << "\n";
-        system("pause");
-
-    } while (true);
-
-}
-
-int menu()
+int DescriptiveStatistics::menu()
 {
     system("cls");
     cout << "\n\t3> Descriptive Statistics";
@@ -72,7 +31,315 @@ int menu()
     cout << "\n\t" + string(100, char(205));
     cout << "\n";
 
-    char option = inputChar("\t\t  Option: ");
+    char option = inputChar("Enter a menu option: ");
     system("cls");
     return option;
+}
+
+void DescriptiveStatistics::chooseOption()
+{
+    arr = nullptr;
+    arraySize = 0;
+    bool flag = true;
+    do
+    {
+        switch (menu())
+        {
+        case '0': { delete[] arr; arr = nullptr; flag = false;  break; }
+        case 'A':
+        case 'a': { 
+            arr = arrayNumbers(arraySize);
+            break;
+        }
+        case 'B':
+        case 'b': minNumber(arr, arraySize); break;
+        case 'C':
+        case 'c': maxNumber(arr, arraySize); break;
+        case 'D':
+        case 'd': range(arr, arraySize); break;
+        case 'E':
+        case 'e': size(arr, arraySize); break;
+        case 'F':
+        case 'f': sum(arr, arraySize); break;
+        case 'G':
+        case 'g': findMean(arr, arraySize); break;
+        case 'H':
+        case 'h': findMedian(arr, arraySize); break;
+        case 'K':
+        case 'k': standardDeviation(arr, arraySize); break;
+        case 'L':
+        case 'l': variance(arr, arraySize); break;
+        case 'M':
+        case 'm': midRange(arr, arraySize); break;
+        case 'Q':
+        case 'q': sumOfSquares(arr, arraySize); break;
+
+        default: cout << "\t\tERROR - Invalid option. Please re-enter. "; break;
+        }
+        cout << "\n";
+    } while (flag);
+
+}
+
+int* DescriptiveStatistics::arrayNumbers(int& size)
+{
+    int number;
+    string fileName;
+    int totalNumbers = 0;
+    string line;
+
+    cout << "Enter the name of a text file to read from: ";
+    cin >> fileName;
+
+    ifstream myfile(fileName);
+    if (myfile.is_open())
+    {
+        while (getline(myfile, line))
+            ++totalNumbers;
+    }
+    else
+        cout << "ERROR opening the file.";
+    myfile.close();
+    size = totalNumbers;
+
+    int* numbers;
+    numbers = new int[totalNumbers];
+    int count = 0;
+
+
+    myfile.open(fileName);
+    if (myfile.is_open())
+    {
+        cout << "Data set: " << endl;
+        while (myfile >> number)
+        {
+            cout << number << "\n";
+            numbers[count] = number;
+            count++;
+        }
+        myfile.close();
+    }
+    else
+        cout << "\nERROR opening the file.\n";
+
+    return numbers;
+}
+
+int DescriptiveStatistics::minNumber(int* numberarr, int size)
+{
+    int min;
+    if (numberarr == nullptr)
+    {
+        cout << "error: data set is empty";
+        return 0;
+    }
+    else
+    {
+        min = numberarr[0];
+        for (int i = 0; i < size; i++) {
+            if (numberarr[i] < min) {
+                min = numberarr[i];
+            }
+        }
+    }
+    cout << "\nminimum = " << min << endl;
+    return min;
+}
+
+int DescriptiveStatistics::maxNumber(int* numberArr, int size)
+{
+    int max;
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        max = numberArr[0];
+        for (int i = 0; i < size; i++) {
+            if (numberArr[i] > max) {
+                max = numberArr[i];
+            }
+        }
+    }
+    cout << "\nMaximum = " << max << endl;
+    return max;
+}
+
+int DescriptiveStatistics::range(int* numberArr, int size)
+{
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        sort(numberArr, numberArr + size);
+        cout << "Range = " << (numberArr[size - 1] - numberArr[0]);
+        return (numberArr[size - 1] - numberArr[0]);
+    }
+}
+
+int DescriptiveStatistics::size(int* numberArr, int size)
+{
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        cout << "Size = " << size << endl;
+        return size;
+    }
+}
+
+
+
+int DescriptiveStatistics::sum(int* numberArr, int size)
+{
+    double total = 0;
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+
+        for (int i = 0; i < size; i++)
+        {
+            total += numberArr[i];
+        }
+        cout << "Total = " << total << endl;
+        return total;
+    }
+}
+
+double DescriptiveStatistics::findMean(int* numberArr, int size)
+{
+    int sum = 0;
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        for (int i = 0; i < size; i++)
+            sum += numberArr[i];
+
+        double mean = (double)sum / (double)size;
+        cout << "Mean = " << mean << endl;
+        return mean;
+    }
+}
+
+double DescriptiveStatistics::findMedian(int* numberArr, int size)
+{
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        sort(numberArr, numberArr + size);
+
+        if (size % 2 != 0)
+        {
+            cout << "Median = " << (double)numberArr[size / 2] << endl;
+            return (double)numberArr[size / 2];
+        }
+        else
+        {
+            int midValue = size / 2;
+            cout << "Median = " << ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0) << endl;
+            return ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0);
+        }
+    }
+}
+
+
+
+double DescriptiveStatistics::standardDeviation(int* numberArr, int size)
+{
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        double varianceNum = variance(numberArr, size);
+        double stndrdDev = sqrt(varianceNum);
+
+        cout << "\nStandard Deviation = " << stndrdDev << endl;
+        return stndrdDev;
+    }
+}
+double DescriptiveStatistics::variance(int* numberArr, int size)
+{
+    double sumSquares = 0;
+    double difference = 0;
+    double variance = 0;
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        double mean = findMean(numberArr, size);
+        for (int i = 0; i < size; i++)
+        {
+            difference = numberArr[i] - mean;
+
+            sumSquares += (difference * difference);
+        }
+    }
+    variance = (sumSquares / (size - 1));
+    cout << "Variance = " << variance << endl;
+    return variance;
+}
+int DescriptiveStatistics::midRange(int* numberArr, int size)
+{
+    int mRange = 0;
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        mRange = ((maxNumber(numberArr, size) + minNumber(numberArr, size)) / 2);
+        cout << "\nMid Range = " << mRange << endl;
+        return mRange;
+    }
+}
+
+double DescriptiveStatistics::sumOfSquares(int* numberArr, int size)
+{
+    double sumSquares = 0;
+    double difference = 0;
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else
+    {
+        double mean = findMean(numberArr, size);
+        for (int i = 0; i < size; i++)
+        {
+            difference = numberArr[i] - mean;
+
+            sumSquares += (difference * difference);
+        }
+        cout << "Sum of Squares = " << sumSquares << endl;
+        return sumSquares;
+    }
+
 }
