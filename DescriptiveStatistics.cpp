@@ -251,14 +251,14 @@ double DescriptiveStatistics::findMedian(int* numberArr, int size)
 
         if (size % 2 != 0)
         {
-            cout << "Median = " << (double)numberArr[(size-1) / 2] << endl;
-            return (double)numberArr[(size+1) / 2];
+            cout << "Median = " << (double)numberArr[size / 2] << endl;
+            return (double)numberArr[size / 2];
         }
         else
         {
             int midValue = size / 2;
             cout << "Median = " << ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0) << endl;
-            return ((numberArr[midValue + 1] + numberArr[midValue]) / 2.0);
+            return ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0);
         }
     }
 }
