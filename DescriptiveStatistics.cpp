@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <math.h> 
+#include <map>
 
 using namespace std;
 
@@ -71,11 +72,27 @@ void DescriptiveStatistics::chooseOption()
         case 'l': variance(arr, arraySize); break;
         case 'M':
         case 'm': midRange(arr, arraySize); break;
+        case 'N':
+        case 'n': {
+            cout << "Quartile 1 --> "; cout << getQuartile1(arr, arraySize) << endl; 
+            cout << "Quartile 2 --> "; cout << getQuartile2(arr, arraySize) << endl; 
+            cout << "Quartile 3 --> "; cout << getQuartile3(arr, arraySize) << endl; break;
+        }
         case 'Q':
         case 'q': sumOfSquares(arr, arraySize); break;
-
+        case 'R':
+        case 'r': meanAbsDev(arr, arraySize); break;
+        case 'S':
+        case 's': rootMeanSquare(arr, arraySize); break;
+        case 'T':
+        case 't': standardErrorMean(arr, arraySize); break;
+        case 'U':
+        case 'u': coeffecientVariation(arr, arraySize); break;
+        case 'V' :
+        case 'v': relativeStandardDev(arr, arraySize); break;
         default: cout << "\t\tERROR - Invalid option. Please re-enter. "; break;
         }
+        
         cout << "\n";
         system("pause");
     } while (flag);
@@ -143,7 +160,7 @@ int DescriptiveStatistics::minNumber(int* numberarr, int size)
             }
         }
     }
-    cout << "\nminimum = " << min << endl;
+    cout << "\nMinimum = " << min << endl;
     return min;
 }
 
@@ -192,7 +209,7 @@ int DescriptiveStatistics::size(int* numberArr, int size)
     }
     else
     {
-        cout << "Size = " << size << endl;
+        cout << "\nSize = " << size << endl;
         return size;
     }
 }
@@ -214,7 +231,7 @@ int DescriptiveStatistics::sum(int* numberArr, int size)
         {
             total += numberArr[i];
         }
-        cout << "Total = " << total << endl;
+        cout << "\nTotal = " << total << endl;
         return total;
     }
 }
@@ -233,7 +250,7 @@ double DescriptiveStatistics::findMean(int* numberArr, int size)
             sum += numberArr[i];
 
         double mean = (double)sum / (double)size;
-        cout << "Mean = " << mean << endl;
+        cout << "\nMean = " << mean << endl;
         return mean;
     }
 }
@@ -251,13 +268,13 @@ double DescriptiveStatistics::findMedian(int* numberArr, int size)
 
         if (size % 2 != 0)
         {
-            cout << "Median = " << (double)numberArr[size / 2] << endl;
+            cout << "\nMedian = " << (double)numberArr[size / 2] << endl;
             return (double)numberArr[size / 2];
         }
         else
         {
             int midValue = size / 2;
-            cout << "Median = " << ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0) << endl;
+            cout << "\nMedian = " << ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0) << endl;
             return ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0);
         }
     }
@@ -302,7 +319,7 @@ double DescriptiveStatistics::variance(int* numberArr, int size)
         }
     }
     variance = (sumSquares / (size - 1));
-    cout << "Variance = " << variance << endl;
+    cout << "\nVariance = " << variance << endl;
     return variance;
 }
 int DescriptiveStatistics::midRange(int* numberArr, int size)
@@ -339,9 +356,27 @@ double DescriptiveStatistics::sumOfSquares(int* numberArr, int size)
 
             sumSquares += (difference * difference);
         }
-        cout << "Sum of Squares = " << sumSquares << endl;
+        cout << "\nSum of Squares = " << sumSquares << endl;
         return sumSquares;
     }
+}
+
+double DescriptiveStatistics::meanAbsDev(int* numberArr,int size) {
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else {
+        double  meanAbs = 0;
+        double mean = findMean(numberArr, size);
+        for (int i = 0; i < size; i++) {
+            meanAbs += abs(numberArr[i] - mean);
+        }
+        cout << "\nMean Absolute Deviation: " << meanAbs / size;
+        return meanAbs / size;
+    }
+
 }
 
 //pre:  needs a pointer to an array(not empty); size (size!=0)
@@ -398,4 +433,60 @@ double DescriptiveStatistics::getQuartile3(int* numberArr, int size)
         return (numberArr[3] + numberArr[4]) / 2;
     else
         return numberArr[3];
+}
+
+double DescriptiveStatistics::rootMeanSquare(int* numberArr, int size) {
+
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else {
+        double squareTotal = 0;
+        for (int i = 0; i < size; i++) {
+            squareTotal += pow(numberArr[i], 2);
+        }
+        cout << "Root Mean Square = " << sqrt(squareTotal / size) << endl;
+        return sqrt(squareTotal / size);
+    }
+}
+double DescriptiveStatistics::coeffecientVariation(int* numberArr, int size) {
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else {
+        double coVariation = standardDeviation(numberArr, size)  / findMean(numberArr, size);
+        cout << "Coefficient of Variation: " << coVariation;
+        return coVariation;
+    }
+}
+double DescriptiveStatistics::standardErrorMean(int* numberArr, int size)
+{
+
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else {
+        double standardError = standardDeviation(numberArr, size) / sqrt(size);
+        cout << "Standard Error of the Mean: " << standardError;
+        return standardError;
+    }
+}
+
+double DescriptiveStatistics::relativeStandardDev(int* numberArr, int size) {
+    if (numberArr == nullptr)
+    {
+        cout << "Error: Data set is empty";
+        return 0;
+    }
+    else {
+        double relStandDev = (standardDeviation(numberArr, size) * 100) / findMean(numberArr, size);
+        cout << "\nRelative Standard Deviation = " << relStandDev << "%";
+        return relStandDev;
+    }
 }

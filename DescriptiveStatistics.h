@@ -1,14 +1,11 @@
 #ifndef DESCRIPTIVESTATISTICS_H
 #define DESCRIPTIVESTATISTICS_H
 
-
-
 class DescriptiveStatistics {
 
 private:
 	int arraySize = 0;
 	int* arr = nullptr;
-
 public:
 	void chooseOption();
 	int menu();
@@ -24,9 +21,14 @@ public:
 	double variance(int* numberArr, int size);
 	int midRange(int*, int);
 	double sumOfSquares(int* numberArr, int size);
+	double meanAbsDev(int* numberArr, int size);
 	double getQuartile1(int* numberArr, int size);
 	double getQuartile2(int* numberArr, int size);
 	double getQuartile3(int* numberArr, int size);
+	double rootMeanSquare(int* numberArr, int size);
+	double standardErrorMean(int* numberArr, int size);
+	double coeffecientVariation(int* numberArr, int size);
+	double relativeStandardDev(int* numberArr, int size);
 };
 
 #endif
