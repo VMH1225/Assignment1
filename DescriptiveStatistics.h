@@ -24,6 +24,9 @@ public:
 	double variance(int* numberArr, int size);
 	int midRange(int*, int);
 	double sumOfSquares(int* numberArr, int size);
+	double getQuartile1(int* numberArr, int size);
+	double getQuartile2(int* numberArr, int size);
+	double getQuartile3(int* numberArr, int size);
 };
 
 #endif

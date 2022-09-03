@@ -77,6 +77,7 @@ void DescriptiveStatistics::chooseOption()
         default: cout << "\t\tERROR - Invalid option. Please re-enter. "; break;
         }
         cout << "\n";
+        system("pause");
     } while (flag);
 
 }
@@ -250,14 +251,14 @@ double DescriptiveStatistics::findMedian(int* numberArr, int size)
 
         if (size % 2 != 0)
         {
-            cout << "Median = " << (double)numberArr[size / 2] << endl;
-            return (double)numberArr[size / 2];
+            cout << "Median = " << (double)numberArr[(size-1) / 2] << endl;
+            return (double)numberArr[(size+1) / 2];
         }
         else
         {
             int midValue = size / 2;
             cout << "Median = " << ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0) << endl;
-            return ((numberArr[midValue - 1] + numberArr[midValue]) / 2.0);
+            return ((numberArr[midValue + 1] + numberArr[midValue]) / 2.0);
         }
     }
 }
@@ -341,5 +342,60 @@ double DescriptiveStatistics::sumOfSquares(int* numberArr, int size)
         cout << "Sum of Squares = " << sumSquares << endl;
         return sumSquares;
     }
+}
 
+//pre:  needs a pointer to an array(not empty); size (size!=0)
+    //post: using function findMedian gets the quartile 1
+double DescriptiveStatistics::getQuartile1(int* numberArr, int size)
+{
+    if (size < 4)
+        return -1;      //cannot get
+
+    if (size >= 7)
+    {
+        if (size % 2 == 0)      //if even
+            return (numberArr[(size / 4)] + numberArr[(size / 4) - 1]) / 2;
+        else                //if odd
+        {
+            int temp = size + 1;
+            return numberArr[temp / 4];
+        }
+    }
+    else if (size == 6)
+        return numberArr[1];
+    else if (size == 5)
+        return (numberArr[0] + numberArr[1]) / 2;
+    else
+        return numberArr[0];
+}
+//pre:  needs a pointer to an array, and its size
+//post: using function findMedian gets the quartile 2
+double DescriptiveStatistics::getQuartile2(int* numberArr, int size)
+{
+    return findMedian(numberArr, size);
+}
+//pre:  needs a pointer to an array, and its size
+// only use if sorted
+//post: using function findMedian gets the quartile 3
+double DescriptiveStatistics::getQuartile3(int* numberArr, int size)
+{
+    if (size < 4)
+        return -1;      //cannot get
+
+    if (size >= 7)
+    {
+        if (size % 2 == 0)      //if even
+            return (numberArr[(size / 4) * 3] + numberArr[((size / 4) * 3) - 1]) / 2;
+        else               //if odd
+        {
+            int temp = size + 1;
+            return numberArr[(temp / 4) * 3];
+        }
+    }
+    else if (size == 6)
+        return numberArr[4];
+    else if (size == 5)
+        return (numberArr[3] + numberArr[4]) / 2;
+    else
+        return numberArr[3];
 }
