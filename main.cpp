@@ -59,10 +59,8 @@ int menuOption()
 }
 
 void Challenge4() {
-    cout << "hi" << endl;
     DescriptiveStatistics data1;
     data1.chooseOption();
-
 }
 
 //
