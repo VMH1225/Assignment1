@@ -77,6 +77,7 @@ void DescriptiveStatistics::chooseOption()
         default: cout << "\t\tERROR - Invalid option. Please re-enter. "; break;
         }
         cout << "\n";
+        system("pause");
     } while (flag);
 
 }

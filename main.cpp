@@ -33,8 +33,7 @@ int main()
         default: cout << "\t\terror - invalid option. please re-enter."; break;
         }
         cout << "\n";
-        system("pause");
-
+   
     } while (true);
 
     return 0;
