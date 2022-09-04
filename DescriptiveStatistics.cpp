@@ -216,7 +216,7 @@ int DescriptiveStatistics::size(int* numberArr, int size)
 
 
 
-int DescriptiveStatistics::sum(int* numberArr, int size)
+double DescriptiveStatistics::sum(int* numberArr, int size)
 {
     double total = 0;
     if (numberArr == nullptr)
@@ -279,7 +279,6 @@ double DescriptiveStatistics::findMedian(int* numberArr, int size)
         }
     }
 }
-
 
 
 double DescriptiveStatistics::standardDeviation(int* numberArr, int size)
