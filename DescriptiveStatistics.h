@@ -14,7 +14,7 @@ public:
 	int maxNumber(int*, int);
 	int range(int* numberArr, int size);
 	int size(int* numberArr, int size);
-	int sum(int* numberArr, int size);
+	double sum(int* numberArr, int size);
 	double findMean(int*, int);
 	double findMedian(int* numberArr, int size);
 	double standardDeviation(int* numberArr, int size);

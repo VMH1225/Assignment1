@@ -143,6 +143,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Downloads\ASCII.h" />
+    <ClInclude Include="BaseConverter.h" />
     <ClInclude Include="DescriptiveStatistics.h" />
     <ClInclude Include="input.h" />
   </ItemGroup>
